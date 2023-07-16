@@ -4,6 +4,10 @@ import java.io.Serializable;
 // Register the instant moment - another way rather using "Date"
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,10 +20,12 @@ import jakarta.persistence.Table;
 @Table(name = "tb_order") // Give a name / Changes the name of the table
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 
 	@ManyToOne // tells to JPA database transform this variable "client" into a foreign key
