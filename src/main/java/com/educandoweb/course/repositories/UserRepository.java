@@ -6,6 +6,9 @@ import com.educandoweb.course.entities.User;
 
 /**
  * Repositories must be interfaces because "JPARepository" are also interfaces
+ * For this class, it's not necessary insert the "@Repository" cause 
+ * "JpaRepository" already have that.
+ * So it is optional to give the annotation for this class.
  */
 public interface UserRepository extends JpaRepository<User, Long> {
 
