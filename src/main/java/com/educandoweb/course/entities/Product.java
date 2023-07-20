@@ -8,6 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -31,7 +34,13 @@ public class Product implements Serializable {
 	 * Hash Set is the same as List and ArrayList. Set and List cannot be
 	 * instantiated.
 	 */
-	@Transient // Makes JPA to not interpret this. (Provisory solution 307 - 12:00)
+	@ManyToMany // JPA annotation -
+	// In this annotation we must give the name of the table and the foreign
+	// keys that will be associated to the product table for category table
+	@JoinTable(name = "tb_product_category", // Creates the table name for the associations product-category
+			joinColumns = @JoinColumn(name = "product_id"), // this is the foreign key for product(?)
+			inverseJoinColumns = @JoinColumn(name = "category_id")) // inverseJoinColumns defines the foreign key from
+																	// the other entity which is category
 	private Set<Category> categories = new HashSet<>();
 
 	public Product() {

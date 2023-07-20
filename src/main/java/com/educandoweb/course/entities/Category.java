@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -25,7 +28,8 @@ public class Category implements Serializable {
 	 * This variable represents an ASSOCIATION! (variables names are based on the
 	 * diagram)
 	 */
-	@Transient // Makes JPA to not interpret this. (Provisory solution 307 - 12:00)
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories") // the mappedBy comes from the "private Set<Category> categories = new HashSet<>();" in the Product Class/Entity
 	private Set<Product> products = new HashSet<>();
 
 	public Category() {

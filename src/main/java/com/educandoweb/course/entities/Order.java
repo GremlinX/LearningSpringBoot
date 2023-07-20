@@ -32,7 +32,7 @@ public class Order implements Serializable {
 	private Integer orderStatus;
 
 	@ManyToOne // tells to JPA database transform this variable "client" into a foreign key
-	@JoinColumn(name = "client_id") // name of the foreign key to be given to JPA database
+	@JoinColumn(name = "client_id") // name of the foreign key (client_id )to be given to JPA database
 	private User client;
 
 	public Order() {

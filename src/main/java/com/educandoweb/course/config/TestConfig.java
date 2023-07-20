@@ -71,5 +71,21 @@ public class TestConfig implements CommandLineRunner {
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		
+		// Inside the p1's category "p1.getCategory" i'm going to associate to cat2 ".add(cat2)"!
+		p1.getCategories().add(cat2);
+		// Inside the p2's category "p2.getCategory" i'm going to associate to cat2 ".add(cat1)"!
+		p2.getCategories().add(cat1);
+		// Inside the p2's category "p2.getCategory" i'm going to associate to cat2 ".add(cat3)"!
+		p2.getCategories().add(cat3);
+		// Inside the p3's category "p3.getCategory" i'm going to associate to cat2 ".add(cat3)"!
+		p3.getCategories().add(cat3);
+		// Inside the p4's category "p4.getCategory" i'm going to associate to cat2 ".add(cat3)"!
+		p4.getCategories().add(cat3);
+		// Inside the p5's category "p5.getCategory" i'm going to associate to cat2 ".add(cat2)"!
+		p5.getCategories().add(cat2);
+		
+		// We have to save them again since we modified in the above lines.
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 	}
 }
