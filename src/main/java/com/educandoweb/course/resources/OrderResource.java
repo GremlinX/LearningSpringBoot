@@ -43,7 +43,7 @@ public class OrderResource {
 									// URL
 	/**
 	 * Spring, to accept this id in the parameter we need to give an annotation called 
-	 * "PàthVariable" that says that a variable will be given in the URL
+	 * "PathVariable" that says that a variable will be given in the URL
 	 * and then it will obtain the id in the url and pass to the method argument.
 	 * @param id
 	 * @return

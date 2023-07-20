@@ -62,12 +62,14 @@ public class Order implements Serializable {
 		this.moment = moment;
 	}
 	
-	/** This method had to be modified cause we set up orderStatus as Integer! */
+	/** This method had to be modified cause we set up orderStatus as Integer! 
+	 * You will obtain an OrderStatus value by the int orderStatus*/
 	public OrderStatus getOrderStatus() {
 		return OrderStatus.valueOf(orderStatus);
 	}
 
-	/** This method had to be modified cause we set up orderStatus as Integer! */
+	/** This method had to be modified cause we set up orderStatus as Integer! 
+	 * You're going to pass an OrderStatus value and it will set up as an int value */
 	public void setOrderStatus(OrderStatus orderStatus) {
 		if(orderStatus != null) {
 			this.orderStatus = orderStatus.getCode();

@@ -19,9 +19,15 @@ public enum OrderStatus {
 		return code;
 	}
 	
-	/** Converts a numeric value to ENUM value 
-	 * It is static cause we won't need it to be instantiated 
-	 * Basically you will give a code and this method will return you a OrderStatus value (enum) 
+	/** <ul>
+	* <li>Converts a numeric value to ENUM value</li>
+	* <li>
+		It is static cause we won't need it to be instantiated 
+		Basically you will give a code and this method will return you a OrderStatus value (enum) 
+	 * </li>
+	 * </ul>
+	 * @param code - you will give a code int number
+	 * @return - an "OrderStatus" value
 	 */
 	public static OrderStatus valueOf(int code) {
 		// Search one-by-one enum value if the code exists in the enum class
