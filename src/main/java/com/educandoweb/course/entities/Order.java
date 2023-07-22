@@ -3,11 +3,11 @@ package com.educandoweb.course.entities;
 import java.io.Serializable;
 // Register the instant moment - another way rather using "Date"
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.educandoweb.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,12 +29,19 @@ public class Order implements Serializable {
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	
+
 	private Integer orderStatus;
 
 	@ManyToOne // tells to JPA database transform this variable "client" into a foreign key
 	@JoinColumn(name = "client_id") // name of the foreign key (client_id )to be given to JPA database
 	private User client;
+
+	/**
+	 * Why id.order? Cause in OrderItem that is inside the "<>" we have the id has
+	 * the order.
+	 */
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
 
 	public Order() {
 	}
@@ -61,17 +69,21 @@ public class Order implements Serializable {
 	public void setMoment(Instant moment) {
 		this.moment = moment;
 	}
-	
-	/** This method had to be modified cause we set up orderStatus as Integer! 
-	 * You will obtain an OrderStatus value by the int orderStatus*/
+
+	/**
+	 * This method had to be modified cause we set up orderStatus as Integer! You
+	 * will obtain an OrderStatus value by the int orderStatus
+	 */
 	public OrderStatus getOrderStatus() {
 		return OrderStatus.valueOf(orderStatus);
 	}
 
-	/** This method had to be modified cause we set up orderStatus as Integer! 
-	 * You're going to pass an OrderStatus value and it will set up as an int value */
+	/**
+	 * This method had to be modified cause we set up orderStatus as Integer! You're
+	 * going to pass an OrderStatus value and it will set up as an int value
+	 */
 	public void setOrderStatus(OrderStatus orderStatus) {
-		if(orderStatus != null) {
+		if (orderStatus != null) {
 			this.orderStatus = orderStatus.getCode();
 		}
 	}
@@ -86,6 +98,10 @@ public class Order implements Serializable {
 
 	public void setClient(User client) {
 		this.client = client;
+	}
+
+	public Set<OrderItem> getItems() {
+		return items;
 	}
 
 	@Override
