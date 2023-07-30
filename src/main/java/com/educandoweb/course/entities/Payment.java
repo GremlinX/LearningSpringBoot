@@ -3,6 +3,8 @@ package com.educandoweb.course.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,7 @@ public class Payment implements Serializable {
 	 *  Which means that this class needs to be given the annotation "@OneToOne"
 	 *  and "@MapsId".
 	 */
+	@JsonIgnore
 	@OneToOne
 	@MapsId
 	private Order order;
