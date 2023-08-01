@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +44,7 @@ public class UserResource {
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping(value = "/{id}") // This is indicating that in this endpoint / path i'm accepting and id in the
+	@GetMapping(value = "/{id}") // This is indicating that in this endpoint / path i'm accepting an id in the
 									// URL
 	/**
 	 * Spring, to accept this id in the parameter we need to give an annotation
@@ -73,5 +74,20 @@ public class UserResource {
 		// that contains
 		// the new path of the new resource that we inserted.
 		return ResponseEntity.created(uri).body(obj);
+	}
+	
+	@DeleteMapping(value = "/{id}")
+	/**
+	 * This method is responsible for deleting users.
+	 * "@DeleteMapping" is a Spring annotation for delete routes.
+	 * "@PathVariable" makes the variable, in this case is "id", be recognized as 
+	 * a variable for URL.
+	 * @param id
+	 * @return
+	 */
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
+		// .noContent() return a empty response and the HTTP code is 204.
+		return ResponseEntity.noContent().build();
 	}
 }
