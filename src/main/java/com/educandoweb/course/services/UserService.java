@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 
 /**
  * "UserService" needs a dependency for UserRepository (I) For the needing of
@@ -32,7 +33,9 @@ public class UserService {
 
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		// orElseThrow method tries to "get (as the get method)" the user
+		// if there is no user it will trigger the Exception "ResourceNotFoundException"
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public User insert(User obj) {
@@ -50,9 +53,10 @@ public class UserService {
 	}
 
 	/**
-	 * This method will be responsible for updating my "entity" based on the user "obj".
-	 * Basically i'm telling that I don't want to update the rest of the attributes which are
-	 * "id" and "password"
+	 * This method will be responsible for updating my "entity" based on the user
+	 * "obj". Basically i'm telling that I don't want to update the rest of the
+	 * attributes which are "id" and "password"
+	 * 
 	 * @param entity
 	 * @param obj
 	 */
