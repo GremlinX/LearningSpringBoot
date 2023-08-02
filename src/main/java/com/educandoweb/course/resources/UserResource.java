@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,13 +76,13 @@ public class UserResource {
 		// the new path of the new resource that we inserted.
 		return ResponseEntity.created(uri).body(obj);
 	}
-	
+
 	@DeleteMapping(value = "/{id}")
 	/**
-	 * This method is responsible for deleting users.
-	 * "@DeleteMapping" is a Spring annotation for delete routes.
-	 * "@PathVariable" makes the variable, in this case is "id", be recognized as 
-	 * a variable for URL.
+	 * This method is responsible for deleting users. "@DeleteMapping" is a Spring
+	 * annotation for delete routes. "@PathVariable" makes the variable, in this
+	 * case is "id", be recognized as a variable for URL.
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -90,4 +91,19 @@ public class UserResource {
 		// .noContent() return a empty response and the HTTP code is 204.
 		return ResponseEntity.noContent().build();
 	}
+
+	@PutMapping(value = "/{id}")
+	/**
+	 * This method id responsible for updating users. "@PutMapping" is a Spring
+	 * annotation for updating routes, in this case, specific users.
+	 * 
+	 * @param id  Comes from the URL
+	 * @param obj
+	 * @return
+	 */
+	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) {
+		obj = service.update(id, obj);
+		return ResponseEntity.ok().body(obj);
+	}
+
 }

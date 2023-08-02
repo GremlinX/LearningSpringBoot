@@ -38,8 +38,27 @@ public class UserService {
 	public User insert(User obj) {
 		return repository.save(obj);
 	}
-	
+
 	public void delete(Long id) {
 		repository.deleteById(id);
+	}
+
+	public User update(Long id, User obj) {
+		User entity = repository.getReferenceById(id);
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	/**
+	 * This method will be responsible for updating my "entity" based on the user "obj".
+	 * Basically i'm telling that I don't want to update the rest of the attributes which are
+	 * "id" and "password"
+	 * @param entity
+	 * @param obj
+	 */
+	private void updateData(User entity, User obj) {
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
 	}
 }
