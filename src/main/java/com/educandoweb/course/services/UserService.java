@@ -13,6 +13,8 @@ import com.educandoweb.course.repositories.UserRepository;
 import com.educandoweb.course.services.exceptions.DatabaseException;
 import com.educandoweb.course.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 /**
  * "UserService" needs a dependency for UserRepository (I) For the needing of
  * creating a "Component" (doubt?) we need to insert an annotation "@Service".
@@ -52,15 +54,20 @@ public class UserService {
 			// In case the user try to delete a data that does not exist.
 			throw new ResourceNotFoundException(id);
 		} catch (DataIntegrityViolationException e) {
-			// In case the data is violating integrity.
+			// In case there is integrity data violation.
 			throw new DatabaseException(e.getMessage());
 		}
 	}
 
 	public User update(Long id, User obj) {
-		User entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			User entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		} catch (EntityNotFoundException e) {
+			// In case the user tries to update a non existent data.
+			throw new ResourceNotFoundException(id);
+		}
 	}
 
 	/**
